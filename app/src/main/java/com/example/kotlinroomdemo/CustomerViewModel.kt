@@ -4,11 +4,13 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.example.kotlinroomdemo.db.Customer
 import com.example.kotlinroomdemo.db.CustomerRepository
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.regex.Pattern
@@ -152,5 +154,14 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
 
         saveOrUpdateButtonText.value = "Update"
         clearAllorDeleteButtonText.value = "Delete"
+    }
+
+    /**
+     * New function added to understand how to use flow
+     */
+    fun getSavedCustomers() = liveData {
+        repository.customers.collect {
+            emit(it)
+        }
     }
 }

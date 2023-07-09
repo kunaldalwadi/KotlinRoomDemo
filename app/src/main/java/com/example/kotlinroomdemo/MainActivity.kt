@@ -61,16 +61,23 @@ class MainActivity : AppCompatActivity() {
         displayAllCustomers()
     }
 
-    fun displayAllCustomers() {
-        viewModel.customers.observe(this, Observer {
-            Log.i(TAG, "displayAllCustomers: " + it.size)
-            Log.i(TAG, "displayAllCustomers: " + it.toString())
+    private fun displayAllCustomers() {
 
-            //Using Kotlin Higher Order Function to pass a function as an argument.
-            binding.rvCustomerListview.adapter = CustomerRecyclerViewAdapter(it) { selectedCustomer: Customer ->
-                clickEventOnRecyclerView(selectedCustomer)
+        viewModel.getSavedCustomers().observe(this, Observer {
+            binding.rvCustomerListview.adapter = CustomerRecyclerViewAdapter(it) {
+                selectedCustomer: Customer -> clickEventOnRecyclerView(selectedCustomer)
             }
         })
+
+//        viewModel.customers.observe(this, Observer {
+//            Log.i(TAG, "displayAllCustomers: " + it.size)
+//            Log.i(TAG, "displayAllCustomers: " + it.toString())
+//
+//            //Using Kotlin Higher Order Function to pass a function as an argument.
+//            binding.rvCustomerListview.adapter = CustomerRecyclerViewAdapter(it) { selectedCustomer: Customer ->
+//                clickEventOnRecyclerView(selectedCustomer)
+//            }
+//        })
     }
 
     fun clickEventOnRecyclerView(customer: Customer) {

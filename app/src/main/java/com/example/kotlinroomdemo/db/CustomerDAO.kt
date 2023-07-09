@@ -1,11 +1,11 @@
 package com.example.kotlinroomdemo.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CustomerDAO {
@@ -28,7 +28,11 @@ interface CustomerDAO {
      * because it is of type LiveData, Room db itself runs that operation on a background thread.
      * hence we do not have to use coroutine or asynctask or executor, it is managed by Room itself.
      */
+//    @Query("SELECT * FROM CUSTOMER_DATA_TABLE")
+//    fun getAllCustomers(): LiveData<List<Customer>>
+
+    //Adding Flow to the project
     @Query("SELECT * FROM CUSTOMER_DATA_TABLE")
-    fun getAllCustomers():LiveData<List<Customer>>
+    fun getAllCustomers(): Flow<List<Customer>>
 
 }
