@@ -26,10 +26,28 @@
             android:layout_height="wrap_content" />
 
         <EditText
+            android:id="@+id/et_customer_last_name"
+            android:inputType="text"
+            android:hint="Customer Last Name : "
+            android:text="@={viewModelxml.inputLastName}"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
             android:id="@+id/et_customer_email"
             android:inputType="textEmailAddress"
             android:hint="Customer Email : "
             android:text="@={viewModelxml.inputEmail}"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/et_customer_course"
+            android:inputType="text"
+            android:hint="Customer Course : "
+            android:text="@={viewModelxml.inputCourse}"
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -54,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@={viewModelxml.clearAllorDeleteButtonText}"
+                android:text="@={viewModelxml.clearAllOrDeleteButtonText}"
                 android:onClick="@{() -> viewModelxml.clearAllOrDelete()}"
                 android:textStyle="bold" />
 

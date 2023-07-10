@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: MainActivityBinding
     private lateinit var viewModel: CustomerViewModel
+    private lateinit var adapter: CustomerRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,15 +59,21 @@ class MainActivity : AppCompatActivity() {
      */
     private fun initRecyclerView() {
         binding.rvCustomerListview.layoutManager = LinearLayoutManager(this)
+
+        adapter = CustomerRecyclerViewAdapter { selectedCustomer: Customer ->
+            clickEventOnRecyclerView(selectedCustomer)
+        }
+
+        binding.rvCustomerListview.adapter = adapter
+
         displayAllCustomers()
     }
 
     private fun displayAllCustomers() {
 
         viewModel.getSavedCustomers().observe(this, Observer {
-            binding.rvCustomerListview.adapter = CustomerRecyclerViewAdapter(it) {
-                selectedCustomer: Customer -> clickEventOnRecyclerView(selectedCustomer)
-            }
+            adapter.setList(it)
+            adapter.notifyDataSetChanged()
         })
 
 //        viewModel.customers.observe(this, Observer {
@@ -80,7 +87,7 @@ class MainActivity : AppCompatActivity() {
 //        })
     }
 
-    fun clickEventOnRecyclerView(customer: Customer) {
+    private fun clickEventOnRecyclerView(customer: Customer) {
         Toast.makeText(this, "Clicked name is ${customer.name}", Toast.LENGTH_SHORT).show()
 
         viewModel.setupUpdateAndDelete(customer)

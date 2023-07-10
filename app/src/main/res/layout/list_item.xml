@@ -44,7 +44,16 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:hint="John Doe"
+                    android:hint="John"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_last_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:hint="Doe"
                     android:textStyle="bold" />
 
 
