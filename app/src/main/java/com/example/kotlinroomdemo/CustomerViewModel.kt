@@ -18,6 +18,7 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
     val inputName = MutableLiveData<String>()
     val inputLastName = MutableLiveData<String>()
     val inputEmail = MutableLiveData<String>()
+    val inputCourse = MutableLiveData<String?>()
 
     private lateinit var customerTobeUpdatedOrDeleted: Customer
     private var isUpdateOrDelete = false
@@ -56,15 +57,18 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
                 customerTobeUpdatedOrDeleted.name = inputName.value!!
                 customerTobeUpdatedOrDeleted.lastname = inputLastName.value!!
                 customerTobeUpdatedOrDeleted.email = inputEmail.value!!
+                customerTobeUpdatedOrDeleted.course = inputCourse.value!!
                 updateCustomer(customerTobeUpdatedOrDeleted)
             } else {
                 val name = inputName.value ?: "Empty"
                 val lastname = inputLastName.value ?: "Empty"
                 val email = inputEmail.value ?: "Empty"
-                insertCustomer(Customer(0, name, lastname, email))
+                val course = inputCourse.value ?: "Empty"
+                insertCustomer(Customer(0, name, lastname, email, course))
                 inputName.value = ""
                 inputLastName.value = ""
                 inputEmail.value = ""
+                inputCourse.value = ""
             }
         }
     }
@@ -104,6 +108,7 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
                 inputEmail.value = ""
                 inputName.value = ""
                 inputLastName.value = ""
+                inputCourse.value = ""
 
                 isUpdateOrDelete = false
 
@@ -126,6 +131,7 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
                     inputEmail.value = ""
                     inputName.value = ""
                     inputLastName.value = ""
+                    inputCourse.value = ""
 
                     isUpdateOrDelete = false
 
@@ -155,6 +161,7 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
         inputEmail.value = customer.email
         inputName.value = customer.name
         inputLastName.value = customer.lastname
+        inputCourse.value = customer.course
 
         customerTobeUpdatedOrDeleted = customer
         isUpdateOrDelete = true

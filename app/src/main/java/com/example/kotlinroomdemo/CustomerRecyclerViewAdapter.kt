@@ -6,12 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinroomdemo.databinding.ListItemBinding
 import com.example.kotlinroomdemo.db.Customer
 
-class CustomerRecyclerViewAdapter(
-    private val customersList: List<Customer>,
-    private val clickEvent: (Customer) -> Unit
-): RecyclerView.Adapter<CustomerViewHolder>() {
+class CustomerRecyclerViewAdapter(private val clickEvent: (Customer) -> Unit): RecyclerView.Adapter<CustomerViewHolder>() {
 
     private lateinit var binding: ListItemBinding
+
+    private val customersList = ArrayList<Customer>()
 
     /**
      * As the name suggests what should happen when the below ViewHolder is created,
@@ -33,6 +32,11 @@ class CustomerRecyclerViewAdapter(
      */
     override fun onBindViewHolder(holder: CustomerViewHolder, position: Int) {
         holder.bind(customersList[position], clickEvent)
+    }
+
+    fun setList(customers: List<Customer>) {
+        customersList.clear()
+        customersList.addAll(customers)
     }
 
 }

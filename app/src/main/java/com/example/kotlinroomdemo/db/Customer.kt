@@ -18,5 +18,10 @@ data class Customer(
     var lastname: String,
 
     @ColumnInfo(name = "customer_email")
-    var email: String
+    var email: String,
+
+    //Here providing String? we tell that null values are acceptable and hence database
+    //puts null to all the previous values.
+    @ColumnInfo(name = "customer_course")
+    var course: String?
 )
