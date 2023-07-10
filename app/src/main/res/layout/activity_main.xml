@@ -43,15 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/et_customer_course"
-            android:inputType="text"
-            android:hint="Customer Course : "
-            android:text="@={viewModelxml.inputCourse}"
-            android:layout_marginBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
