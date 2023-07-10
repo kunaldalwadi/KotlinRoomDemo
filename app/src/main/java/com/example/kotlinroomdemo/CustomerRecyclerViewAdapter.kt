@@ -42,6 +42,7 @@ class CustomerViewHolder(val binding: ListItemBinding): RecyclerView.ViewHolder(
     fun bind(customer: Customer, clickEvent: (Customer) -> Unit) {
         binding.tvIdNumber.text = customer.id.toString()
         binding.tvName.text = customer.name
+        binding.tvLastName.text = customer.lastname
         binding.tvEmail.text = customer.email
 
         binding.cvCard.setOnClickListener {

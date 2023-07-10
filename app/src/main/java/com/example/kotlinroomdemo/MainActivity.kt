@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 //        })
     }
 
-    fun clickEventOnRecyclerView(customer: Customer) {
+    private fun clickEventOnRecyclerView(customer: Customer) {
         Toast.makeText(this, "Clicked name is ${customer.name}", Toast.LENGTH_SHORT).show()
 
         viewModel.setupUpdateAndDelete(customer)

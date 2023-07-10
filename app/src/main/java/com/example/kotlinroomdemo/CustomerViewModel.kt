@@ -10,21 +10,20 @@ import com.example.kotlinroomdemo.db.Customer
 import com.example.kotlinroomdemo.db.CustomerRepository
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.regex.Pattern
 
 class CustomerViewModel(private val repository: CustomerRepository) : ViewModel() {
 
     val inputName = MutableLiveData<String>()
+    val inputLastName = MutableLiveData<String>()
     val inputEmail = MutableLiveData<String>()
 
     private lateinit var customerTobeUpdatedOrDeleted: Customer
     private var isUpdateOrDelete = false
 
     val saveOrUpdateButtonText = MutableLiveData<String>()
-    val clearAllorDeleteButtonText = MutableLiveData<String>()
+    val clearAllOrDeleteButtonText = MutableLiveData<String>()
 
     private val statusMessage = MutableLiveData<Event<String>>()
     val toastMessage: LiveData<Event<String>>
@@ -32,7 +31,7 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
 
     init {
         saveOrUpdateButtonText.value = "Save"
-        clearAllorDeleteButtonText.value = "Clear All"
+        clearAllOrDeleteButtonText.value = "Clear All"
     }
 
     /**
@@ -46,6 +45,8 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
         //Adding Validations
         if (inputName.value.isNullOrBlank()) {
             statusMessage.value = Event("Enter Name, it can not be blank.")
+        } else if (inputLastName.value.isNullOrBlank()) {
+            statusMessage.value = Event("Enter Last Name, it can not be blank.")
         } else if (inputEmail.value.isNullOrBlank()) {
             statusMessage.value = Event("Enter Email, it can not be blank.")
         } else if (! Patterns.EMAIL_ADDRESS.matcher(inputEmail.value!!).matches()) {
@@ -53,13 +54,16 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
         } else {
             if (isUpdateOrDelete) {
                 customerTobeUpdatedOrDeleted.name = inputName.value!!
+                customerTobeUpdatedOrDeleted.lastname = inputLastName.value!!
                 customerTobeUpdatedOrDeleted.email = inputEmail.value!!
                 updateCustomer(customerTobeUpdatedOrDeleted)
             } else {
                 val name = inputName.value ?: "Empty"
+                val lastname = inputLastName.value ?: "Empty"
                 val email = inputEmail.value ?: "Empty"
-                insertCustomer(Customer(0, name, email))
+                insertCustomer(Customer(0, name, lastname, email))
                 inputName.value = ""
+                inputLastName.value = ""
                 inputEmail.value = ""
             }
         }
@@ -99,11 +103,12 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
             if (updatedRowId > -1) {
                 inputEmail.value = ""
                 inputName.value = ""
+                inputLastName.value = ""
 
                 isUpdateOrDelete = false
 
                 saveOrUpdateButtonText.value = "Save"
-                clearAllorDeleteButtonText.value = "Clear All"
+                clearAllOrDeleteButtonText.value = "Clear All"
 
                 statusMessage.value = Event("$updatedRowId Customer updated successfully")
             } else {
@@ -120,11 +125,12 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
                 if (deletedRowId > -1) {
                     inputEmail.value = ""
                     inputName.value = ""
+                    inputLastName.value = ""
 
                     isUpdateOrDelete = false
 
                     saveOrUpdateButtonText.value = "Save"
-                    clearAllorDeleteButtonText.value = "Clear All"
+                    clearAllOrDeleteButtonText.value = "Clear All"
 
                     statusMessage.value = Event("$deletedRowId Customer deleted successfully")
                 } else {
@@ -148,12 +154,13 @@ class CustomerViewModel(private val repository: CustomerRepository) : ViewModel(
     fun setupUpdateAndDelete(customer: Customer) {
         inputEmail.value = customer.email
         inputName.value = customer.name
+        inputLastName.value = customer.lastname
 
         customerTobeUpdatedOrDeleted = customer
         isUpdateOrDelete = true
 
         saveOrUpdateButtonText.value = "Update"
-        clearAllorDeleteButtonText.value = "Delete"
+        clearAllOrDeleteButtonText.value = "Delete"
     }
 
     /**
