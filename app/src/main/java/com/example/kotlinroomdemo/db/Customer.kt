@@ -11,7 +11,7 @@ data class Customer(
     @ColumnInfo(name = "customer_id")
     var id: Int,
 
-    @ColumnInfo(name = "customer_name")
+    @ColumnInfo(name = "customer_first_name")
     var name: String,
 
     @ColumnInfo(name = "customer_last_name", defaultValue = "No Last Name")
